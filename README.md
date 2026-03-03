@@ -9,7 +9,7 @@ When you run `gh copilot-scratch`, it:
 1. Creates a fresh, timestamped scratch directory under `~/.local/share/copilot-scratch/`
 2. Initializes a git repository in it
 3. Ensures the directory is trusted by Copilot CLI
-4. Launches Copilot CLI in that directory
+4. Launches `gh copilot` in that directory
 5. Prints the scratch directory path when the session ends
 
 This is useful for quick experiments, throwaway coding sessions, or when you want a clean workspace without setting up a project first.
@@ -36,7 +36,6 @@ gh copilot-scratch --version
 ## Prerequisites
 
 - [gh CLI](https://cli.github.com/) installed and authenticated
-- [Copilot CLI](https://docs.github.com/copilot/how-tos/copilot-cli) installed
 - `git` in PATH
 
 ## Scratch directory location

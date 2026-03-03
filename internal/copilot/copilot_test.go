@@ -9,8 +9,8 @@ import (
 
 func TestBuildArgs_NoExtraArgs(t *testing.T) {
 	args := BuildArgs(nil)
-	if len(args) != 0 {
-		t.Errorf("BuildArgs(nil) = %v, want empty", args)
+	if len(args) != 1 || args[0] != "copilot" {
+		t.Errorf("BuildArgs(nil) = %v, want [copilot]", args)
 	}
 }
 
@@ -18,12 +18,13 @@ func TestBuildArgs_ForwardsArgs(t *testing.T) {
 	input := []string{"--model", "claude-sonnet-4.5", "-v"}
 	args := BuildArgs(input)
 
-	if len(args) != len(input) {
-		t.Fatalf("BuildArgs() len = %d, want %d", len(args), len(input))
+	want := append([]string{"copilot"}, input...)
+	if len(args) != len(want) {
+		t.Fatalf("BuildArgs() len = %d, want %d", len(args), len(want))
 	}
 	for i, a := range args {
-		if a != input[i] {
-			t.Errorf("args[%d] = %q, want %q", i, a, input[i])
+		if a != want[i] {
+			t.Errorf("args[%d] = %q, want %q", i, a, want[i])
 		}
 	}
 }
@@ -130,12 +131,12 @@ func TestEnsureTrust_NoDuplicates(t *testing.T) {
 	}
 }
 
-func TestFindCopilot_ReturnsPath(t *testing.T) {
-	path, err := FindCopilot()
+func TestFindGH_ReturnsPath(t *testing.T) {
+	path, err := FindGH()
 	if err != nil {
-		t.Skipf("copilot not in PATH, skipping: %v", err)
+		t.Skipf("gh not in PATH, skipping: %v", err)
 	}
 	if path == "" {
-		t.Error("FindCopilot() returned empty path")
+		t.Error("FindGH() returned empty path")
 	}
 }

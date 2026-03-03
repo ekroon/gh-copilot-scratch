@@ -8,19 +8,17 @@ import (
 	"path/filepath"
 )
 
-// BuildArgs returns the arguments to pass to the copilot binary.
+// BuildArgs returns the arguments to pass to gh copilot.
+// It prepends "copilot" so the result is ["copilot", ...extra].
 func BuildArgs(extra []string) []string {
-	if extra == nil {
-		return nil
-	}
-	args := make([]string, len(extra))
-	copy(args, extra)
+	args := []string{"copilot"}
+	args = append(args, extra...)
 	return args
 }
 
-// FindCopilot locates the copilot binary in PATH.
-func FindCopilot() (string, error) {
-	return exec.LookPath("copilot")
+// FindGH locates the gh CLI binary in PATH.
+func FindGH() (string, error) {
+	return exec.LookPath("gh")
 }
 
 // EnsureTrust adds the given directory to copilot's trusted folders config.

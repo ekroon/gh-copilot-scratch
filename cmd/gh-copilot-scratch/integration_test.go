@@ -24,9 +24,9 @@ func TestIntegration_FullFlow(t *testing.T) {
 	dataHome := t.TempDir()
 	configHome := t.TempDir()
 
-	// Create a mock copilot script that just prints args and exits
-	mockCopilot := filepath.Join(t.TempDir(), "copilot")
-	err := os.WriteFile(mockCopilot, []byte("#!/bin/sh\necho \"COPILOT_CALLED\"\necho \"ARGS: $@\"\necho \"CWD: $(pwd)\"\n"), 0o755)
+	// Create a mock gh script that just prints args and exits
+	mockGH := filepath.Join(t.TempDir(), "gh")
+	err := os.WriteFile(mockGH, []byte("#!/bin/sh\necho \"GH_CALLED\"\necho \"ARGS: $@\"\necho \"CWD: $(pwd)\"\n"), 0o755)
 	if err != nil {
 		t.Fatalf("writing mock copilot: %v", err)
 	}

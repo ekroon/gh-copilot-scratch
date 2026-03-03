@@ -64,10 +64,10 @@ func run(args []string) error {
 		return nil
 	}
 
-	// Find copilot binary
-	copilotPath, err := copilot.FindCopilot()
+	// Find gh binary
+	ghPath, err := copilot.FindGH()
 	if err != nil {
-		return fmt.Errorf("copilot CLI not found in PATH: %w", err)
+		return fmt.Errorf("gh CLI not found in PATH: %w", err)
 	}
 
 	// Create scratch directory
@@ -84,16 +84,16 @@ func run(args []string) error {
 		fmt.Fprintf(os.Stderr, "Warning: could not auto-trust directory: %v\n", err)
 	}
 
-	// Build copilot command args
-	execArgs := []string{"copilot"}
+	// Build gh copilot command args
+	execArgs := []string{"gh"}
 	execArgs = append(execArgs, copilot.BuildArgs(opts.copilotArgs)...)
 
-	// Set working directory and exec copilot
+	// Set working directory and exec gh copilot
 	if err := os.Chdir(dir); err != nil {
 		return fmt.Errorf("changing to scratch dir: %w", err)
 	}
 
-	return syscall.Exec(copilotPath, execArgs, os.Environ())
+	return syscall.Exec(ghPath, execArgs, os.Environ())
 }
 
 func copilotConfigDir() string {
