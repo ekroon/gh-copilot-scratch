@@ -97,15 +97,11 @@ func run(args []string) error {
 }
 
 func copilotConfigDir() string {
-	configHome := os.Getenv("XDG_CONFIG_HOME")
-	if configHome == "" {
-		home, err := os.UserHomeDir()
-		if err != nil {
-			home = "."
-		}
-		configHome = filepath.Join(home, ".config")
+	home, err := os.UserHomeDir()
+	if err != nil {
+		home = "."
 	}
-	return filepath.Join(configHome, "github-copilot")
+	return filepath.Join(home, ".copilot")
 }
 
 func main() {

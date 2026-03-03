@@ -35,7 +35,7 @@ func EnsureTrust(dir string, configDir string) error {
 	}
 
 	var folders []string
-	if raw, ok := config["trustedFolders"]; ok {
+	if raw, ok := config["trusted_folders"]; ok {
 		if arr, ok := raw.([]any); ok {
 			for _, v := range arr {
 				if s, ok := v.(string); ok {
@@ -53,7 +53,7 @@ func EnsureTrust(dir string, configDir string) error {
 	}
 
 	folders = append(folders, dir)
-	config["trustedFolders"] = folders
+	config["trusted_folders"] = folders
 
 	if err := os.MkdirAll(configDir, 0o755); err != nil {
 		return fmt.Errorf("creating config dir: %w", err)

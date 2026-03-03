@@ -51,14 +51,14 @@ func TestEnsureTrust_CreatesConfigIfNotExists(t *testing.T) {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
 
-	trusted, ok := config["trustedFolders"]
+	trusted, ok := config["trusted_folders"]
 	if !ok {
-		t.Fatal("config missing trustedFolders key")
+		t.Fatal("config missing trusted_folders key")
 	}
 
 	folders, ok := trusted.([]any)
 	if !ok {
-		t.Fatalf("trustedFolders type = %T, want []any", trusted)
+		t.Fatalf("trusted_folders type = %T, want []any", trusted)
 	}
 
 	found := false
@@ -69,7 +69,7 @@ func TestEnsureTrust_CreatesConfigIfNotExists(t *testing.T) {
 		}
 	}
 	if !found {
-		t.Errorf("trustedFolders = %v, want to contain %q", folders, scratchDir)
+		t.Errorf("trusted_folders = %v, want to contain %q", folders, scratchDir)
 	}
 }
 
@@ -80,8 +80,8 @@ func TestEnsureTrust_AppendsToExistingConfig(t *testing.T) {
 	// Write existing config with one trusted folder
 	configPath := filepath.Join(configDir, "config.json")
 	existing := map[string]any{
-		"trustedFolders": []string{existingDir},
-		"otherKey":       "preserved",
+		"trusted_folders": []string{existingDir},
+		"otherKey":        "preserved",
 	}
 	data, _ := json.Marshal(existing)
 	os.WriteFile(configPath, data, 0o644)
@@ -99,7 +99,7 @@ func TestEnsureTrust_AppendsToExistingConfig(t *testing.T) {
 	json.Unmarshal(data, &config)
 
 	// Check both folders are present
-	folders := config["trustedFolders"].([]any)
+	folders := config["trusted_folders"].([]any)
 	if len(folders) != 2 {
 		t.Fatalf("trustedFolders len = %d, want 2", len(folders))
 	}
@@ -124,9 +124,9 @@ func TestEnsureTrust_NoDuplicates(t *testing.T) {
 	var config map[string]any
 	json.Unmarshal(data, &config)
 
-	folders := config["trustedFolders"].([]any)
+	folders := config["trusted_folders"].([]any)
 	if len(folders) != 1 {
-		t.Errorf("trustedFolders len = %d after double trust, want 1", len(folders))
+		t.Errorf("trusted_folders len = %d after double trust, want 1", len(folders))
 	}
 }
 
